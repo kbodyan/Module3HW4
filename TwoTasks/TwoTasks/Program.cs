@@ -6,6 +6,8 @@ namespace TwoTasks
     {
         public static void Main(string[] args)
         {
+            var a = new ClassA();
+            a.Run();
         }
     }
 }
