@@ -8,6 +8,8 @@ namespace TwoTasks
         {
             var a = new ClassA();
             a.Run();
+            var b = new ClassB();
+            b.Run();
         }
     }
 }
