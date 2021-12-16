@@ -11,7 +11,7 @@ namespace TwoTasks
     {
         private double _result = 0;
         public event Func<double, double, double> SumEventHandler;
-        public event Action ActionEvent;
+        public event Action<Action> ActionEvent;
         public static double Sum(double x, double y) => x + y;
 
         public double Sum2(double x, double y) => _result += x + y;
@@ -19,9 +19,9 @@ namespace TwoTasks
         public void Run()
         {
             var result = 0.0;
-            ActionEvent = () => result += Sum(2, 3);
-            ActionEvent += () => result += Sum(2, 3);
-            TryCatch(ActionEvent);
+            ActionEvent = TryCatch;
+            ActionEvent += TryCatch;
+            ActionEvent(() => result += Sum(2, 3));
             Console.WriteLine($"First method: sum = {result}");
             SumEventHandler = Sum2;
             SumEventHandler += Sum2;
@@ -31,7 +31,6 @@ namespace TwoTasks
             SumEventHandler = func;
             SumEventHandler += func;
             Console.WriteLine($"Third method: sum = {Executor(SumEventHandler, 2.0, 3.0)}");
-            result = 0;
         }
 
         public object Executor(MulticastDelegate multicastDelegate, params object[] parameters)
